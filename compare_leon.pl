@@ -2,7 +2,7 @@
 # Author : Charles VAN GOETHEM
 
 
-# Perl libs
+# Perl general libs
 use warnings;
 use strict;
 use Getopt::Long;
@@ -10,14 +10,24 @@ use Pod::Usage;
 use File::Basename;
 use Data::Dumper;
 
+# Perl libs for given/when (smartmatch is experimental)
+use v5.14;
+no warnings 'experimental::smartmatch';
+
+
+##########################################################################################
+##########################################################################################
+
+
+my $path_leon = "/Users/adminbioinfo/Documents/Leon/";
 
 
 ##########################################################################################
 ##########################################################################################
 
 # Mandatory 
-my @file;
-my @directory;
+my @files;
+my @directories;
 
 # General arguments
 my $man 		= 0;
@@ -29,8 +39,8 @@ my $verbosity	= 0;
 ## or if usage was explicitly requested.
 
 GetOptions(
-	'f|file=s'	 		=> \@file,
-	'd|directory=s'		=> \@directory,
+	'f|file=s'	 		=> \@files,
+	'd|directory=s'		=> \@directories,
 	'v|verbosity=i'		=> \$verbosity,
 	'help|?' 			=> \$help,
 	'm|man' 			=> \$man
@@ -39,16 +49,69 @@ GetOptions(
 pod2usage(1) if $help;
 pod2usage(-verbose => 2) if $man;
 
-@file = split(/,/,join(',',@file));
-@directory = split(/,/,join(',',@directory));
+@files = split(/,/,join(',',@files));
+@directories = split(/,/,join(',',@directories));
 
 # Test arguments
-pod2usage("Error : need file(s) and/or directory(ies).") unless (@file or @directory);
+pod2usage("Error : need file(s) and/or directory(ies).") unless (@files or @directories);
+
+# Check the files
+foreach my $file (@files) {
+	pod2usage("Error : $file is not a plain text or did not exist.") unless (-f $file);
+	
+	# Check if file is a fastq or fastq.gz
+	my ($name, $dir, $ext) = fileparse($file,qw(.fastq .fastq.gz));
+	pod2usage("Error : $file is not a fastq or a fastq.gz.") unless ($ext);
+}
+
+# Check directories and get fastq and fastq.gz
+foreach my $directory (@directories) {
+	pod2usage("Error : $directory is not a directory or did not exist.") unless (-d $directory);
+	
+	# Complete the list of files with the fastq and fastq.gz in the repertory
+	push(@files, glob "$directory/*.{fastq,fastq.gz}");
+}
+
+# print Dumper @files;
 
 ##########################################################################################
 ##########################################################################################
 
 
+###### Step 
+
+foreach my $file (@files) {
+	my ($name, $dir, $ext) = fileparse($file,qw(.fastq .fastq.gz));
+	
+	# uncompress if necessary 
+	given($ext) {
+		when(".fastq.gz") { # Uncompress then launch the bench
+			print "file : \"".$dir.$name.$ext."\" is a fastQ.gz\n";
+		}
+		#when(".fastq") { # Launch the fastq bench function
+		#	print "file : \"".$dir.$name.$ext."\" is a fastQ\n";
+		#}
+	}
+	
+	print "ln -s ".$dir.$name.".fastq ".$out.$name.".lossy-leon.fastq";
+	print "ln -s ".$dir.$name.".fastq ".$out.$name.".lossless-leon.fastq";
+	
+	print $path_leon." -f ".$dir.$name.".fastq\n -c";
+	print $path_leon." -f ".$dir.$name.".fastq\n -c -lossless";
+	
+}
+
+##########################################################################################
+##########################################################################################
+
+
+sub benchFastq {
+	
+}
+
+
+##########################################################################################
+##########################################################################################
 
 __END__
 
