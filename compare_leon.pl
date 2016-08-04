@@ -9,6 +9,7 @@ use Getopt::Long;
 use Pod::Usage;
 use File::Basename;
 use Data::Dumper;
+use Cwd;
 
 # Perl libs for given/when (smartmatch is experimental)
 use v5.14;
@@ -20,14 +21,17 @@ no warnings 'experimental::smartmatch';
 
 
 my $path_leon = "/Users/adminbioinfo/Documents/Leon/";
-
+my $pwd = getcwd();
 
 ##########################################################################################
 ##########################################################################################
 
-# Mandatory 
+# Mandatory arguments
 my @files;
 my @directories;
+
+# Optional arguments
+my $output = $pwd;
 
 # General arguments
 my $man 		= 0;
@@ -41,6 +45,7 @@ my $verbosity	= 0;
 GetOptions(
 	'f|file=s'	 		=> \@files,
 	'd|directory=s'		=> \@directories,
+	'o|output=s'		=> \$output,
 	'v|verbosity=i'		=> \$verbosity,
 	'help|?' 			=> \$help,
 	'm|man' 			=> \$man
@@ -77,7 +82,8 @@ foreach my $directory (@directories) {
 ##########################################################################################
 ##########################################################################################
 
-
+my $timer_S;
+my $timer_E;
 ###### Step 
 
 foreach my $file (@files) {
@@ -93,11 +99,18 @@ foreach my $file (@files) {
 		#}
 	}
 	
-	print "ln -s ".$dir.$name.".fastq ".$out.$name.".lossy-leon.fastq";
-	print "ln -s ".$dir.$name.".fastq ".$out.$name.".lossless-leon.fastq";
+	system("ln -s ".$dir.$name.".fastq ".$out.$name.".lossy-leon.fastq");
+	system("ln -s ".$dir.$name.".fastq ".$out.$name.".lossless-leon.fastq");
 	
-	print $path_leon." -f ".$dir.$name.".fastq\n -c";
-	print $path_leon." -f ".$dir.$name.".fastq\n -c -lossless";
+	$timer_S = time();
+	system($path_leon." -f ".$dir.$name.".fastq\n -c");
+	$timer_E = time();
+	my $comp_leon_lossy_time = $timer_E - $timer_S;
+	
+	$timer_S = time();
+	system($path_leon." -f ".$dir.$name.".fastq\n -c -lossless");
+	$timer_E = time();
+	my $comp_leon_lossless_time = $timer_E - $timer_S;
 	
 }
 
