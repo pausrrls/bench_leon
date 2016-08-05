@@ -21,7 +21,7 @@ use File::stat;
 ##########################################################################################
 
 
-my $path_leon = "/Users/adminbioinfo/Documents/Leon/";
+my $path_leon = "/Users/adminbioinfo/Documents/Leon/leon/leon";
 my $pwd = getcwd();
 
 
@@ -84,7 +84,7 @@ foreach my $directory (@directories) {
 # print Dumper @files;
 
 my $filename = $output."/report.tab";
-open(REPORT , ">$filename") or die "Could not open file '$filename' $!";
+open(OUT , ">$filename") or die "Could not open file '$filename' $!";
 
 ######## Header file (on the same line)
 #	File_ID	Size_fastQ
@@ -141,8 +141,8 @@ foreach my $file (@files) {
 	system("ln -s ".$dir.$name.".fastq ".$file_leon_lossy);
 	system("ln -s ".$dir.$name.".fastq ".$file_leon_lossless);
 	
-	my $time_comp_leon_lossy = timer_cmd_bash($path_leon." -f ".$file_leon_lossy." -c");
-	my $time_comp_leon_lossless = timer_cmd_bash($path_leon." -f ".$file_leon_lossless." -c -lossless");
+	my $time_comp_leon_lossy = timer_cmd_bash($path_leon." -file ".$file_leon_lossy." -c");
+	my $time_comp_leon_lossless = timer_cmd_bash($path_leon." -file ".$file_leon_lossless." -c -lossless");
 	
 	my $size_lossy = size_for_leo_files($file_leon_lossy);
 	my $size_lossless = size_for_leo_files($file_leon_lossless);
@@ -178,8 +178,8 @@ foreach my $file (@files) {
 	##################################
 	##### LEON
 	
-	my $time_uncomp_leon_lossy = timer_cmd_bash($path_leon." -f ".$file_leon_lossy.".leon -d");
-	my $time_uncomp_leon_lossless = timer_cmd_bash($path_leon." -f ".$file_leon_lossless.".leon -d");
+	my $time_uncomp_leon_lossy = timer_cmd_bash($path_leon." -file ".$file_leon_lossy.".leon -d");
+	my $time_uncomp_leon_lossless = timer_cmd_bash($path_leon." -file ".$file_leon_lossless.".leon -d");
 	
 	$line .= $time_uncomp_leon_lossy."\t".$time_uncomp_leon_lossless."\t";
 	
