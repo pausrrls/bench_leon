@@ -9,12 +9,13 @@ use Pod::Usage;
 use File::Basename;
 use Data::Dumper;
 use Cwd;
+use Time::HiRes;
 
 # Perl libs for given/when (smartmatch is experimental)
 use v5.14;
 no warnings 'experimental::smartmatch';
 
-use File::stat;	
+use File::stat;
 
 
 ##########################################################################################
