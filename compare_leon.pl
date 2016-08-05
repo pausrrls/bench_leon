@@ -186,9 +186,9 @@ foreach my $file (@files) {
 	##################################
 	##### Gzip
 	
-	my $time_uncomp_gzip1 = timer_cmd_bash("gunzip -ck ".$file_gzip1);
-	my $time_uncomp_gzip6 = timer_cmd_bash("gunzip -ck ".$file_gzip6);
-	my $time_uncomp_gzip9 = timer_cmd_bash("gunzip -ck ".$file_gzip9);
+	my $time_uncomp_gzip1 = timer_cmd_bash("gunzip ".$file_gzip1);
+	my $time_uncomp_gzip6 = timer_cmd_bash("gunzip ".$file_gzip6);
+	my $time_uncomp_gzip9 = timer_cmd_bash("gunzip ".$file_gzip9);
 	
 	$line .= $time_uncomp_gzip1."\t".$time_uncomp_gzip6."\t".$time_uncomp_gzip9."\n";
 	
