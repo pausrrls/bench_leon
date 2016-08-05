@@ -272,6 +272,10 @@ This script compress and uncompress automatically some fastQ file.
 	-f,--file=file.fastq			Specify the fastq file you want use (possible multiple file) 
 	-d,--directory=path/to/directory	Specify a directory contains some fastq you want use (possible multiple directory)
 
+=head2 Optional arguments
+
+	-o,--output=repertory			You can specify the output repertory (default Current)
+
 =head1 AUTHORS
 
 =over 4
