@@ -83,6 +83,7 @@ foreach my $directory (@directories) {
 }
 
 # print Dumper @files;
+# exit();
 
 my $filename = $output."/report.tab";
 open(OUT , ">$filename") or die "Could not open file '$filename' $!";
