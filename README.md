@@ -35,8 +35,8 @@ Based on bloom filters the _de Bruijn Graph_ this is not exact but efficient to 
 
 
 ## Citations
-* International Human Genome Sequencing Consortium. _Finishing the euchromatic sequence of the human genome._ Nature 431, 931–945. issn: 1476-4687 (Oct. 2004).
-* Fleischmann, R. D. et al. _Whole-genome random sequencing and assembly of Haemophilus influenzae Rd._ Science (New York, N.Y.) 269, 496– 512. issn: 0036-8075 (July 1995).
+* International Human Genome Sequencing Consortium. __Finishing the euchromatic sequence of the human genome.__ Nature 431, 931–945. issn: 1476-4687 (Oct. 2004).
+* Fleischmann, R. D. et al. __Whole-genome random sequencing and assembly of Haemophilus influenzae Rd.__ Science (New York, N.Y.) 269, 496– 512. issn: 0036-8075 (July 1995).
 * Sanger, F., Nicklen, S. & Coulson, A. R. **DNA sequencing with chain- terminating inhibitors.** Proceedings of the National Academy of Sci- ences of the United States of America 74, 5463–5467. issn: 0027-8424 (Dec. 1977).
 * Zhang, Y. et al. **Light-weight reference-based compression of FASTQ data.** BMC bioinformatics 16, 188. issn: 1471-2105 (2015).
 * Benoit, G. et al. **Reference-free compression of high throughput sequencing data with a probabilistic de Bruijn graph.** BMC bioinformatics 16, 288. issn: 1471-2105 (2015).
