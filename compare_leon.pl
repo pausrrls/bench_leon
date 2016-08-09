@@ -146,8 +146,8 @@ foreach my $file (@files) {
 	my $time_comp_leon_lossy = timer_cmd_bash($path_leon." -file ".$file_leon_lossy." -c");
 	my $time_comp_leon_lossless = timer_cmd_bash($path_leon." -file ".$file_leon_lossless." -c -lossless");
 	
-	my $size_lossy = size_for_leo_files($file_leon_lossy);
-	my $size_lossless = size_for_leo_files($file_leon_lossless);
+	my $size_lossy = size_for_leon_files($file_leon_lossy);
+	my $size_lossless = size_for_leon_files($file_leon_lossless);
 	
 	$line .= $time_comp_leon_lossy."\t".$size_lossy."\t";
 	$line .= $time_comp_leon_lossless."\t".$size_lossless."\t";
@@ -199,6 +199,8 @@ foreach my $file (@files) {
 	
 	print OUT $line;
 	
+	system("rm $out/$name*");
+	
 	$i++;
 }
 
@@ -223,7 +225,7 @@ sub timer_cmd_bash {
 	return $diff;
 }
 
-sub size_for_leo_files {
+sub size_for_leon_files {
 	my $file = shift(@_);
 
 	my $stat_leon = stat($file.".leon");
