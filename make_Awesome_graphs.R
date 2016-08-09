@@ -1,3 +1,4 @@
+
 #!/usr/bin/env Rscript
 
 library(ggplot2)
@@ -10,8 +11,6 @@ inputFile = args[0]
 
 
 Unicorn = read.table(inputFile,header=TRUE,sep = "\t")
-
-
 
 
 ########## TREAT for size compression
@@ -29,18 +28,25 @@ for(i in 1:length(out)){ combined = rbind(combined,out[[i]]) }
 # BOX PLOT
 
 g <- ggplot(combined, aes(x=variable,y=100-(value*100/Size_fastQ), colour = variable))
-g + geom_boxplot(notch = FALSE) + 
+boxplot <- g + geom_boxplot(notch = FALSE) + 
   scale_y_continuous(breaks = seq(0,100, by=5)) + 
   geom_jitter(width = 0.2) + 
   facet_grid(.~variable) + 
   facet_grid(.~variable, scales = "free") + 
   theme(legend.position="none")
-
+boxplot
 # linear graph (compression function of the size)
 g <- ggplot(combined, aes(x=Size_fastQ,y=100-(value*100/Size_fastQ), colour = variable))
-g + geom_point() + geom_line() + coord_cartesian(ylim=c(0,100)) + scale_y_continuous(breaks = seq(0,100, by=10))+
-  scale_x_continuous(breaks = c((1024^2)*100,(1024^2)*500,(1024^3),(1024^3)*5,(1024^3)*10), labels = c("100 Mo","500 Mo","1 Go","5 Go","10 Go"))
+#linear_compression <- g + geom_point() + geom_line() + coord_cartesian(ylim=c(0,100)) + scale_y_continuous(breaks = seq(0,100, by=10))+
+#  scale_x_continuous(breaks = c((1024^2)*100,(1024^2)*500,(1024^3),(1024^3)*5,(1024^3)*10), labels = c("100 Mo","500 Mo","1 Go","5 Go","10 Go"))
+linear_compression2 <- g + stat_summary(fun.y = mean, fun.ymin = function(x) mean(x) - sd(x), fun.ymax = function(x) mean(x) + sd(x), geom = "pointrange") + 
+  coord_cartesian(ylim=c(0,100)) + 
+  scale_y_continuous(breaks = seq(0,100, by=10)) +
+  scale_x_continuous(breaks = c((1024^2)*100,(1024^2)*500,(1024^3),(1024^3)*5,(1024^3)*10), labels = c("100 Mo","500 Mo","1 Go","5 Go","10 Go")) +
+  stat_summary(fun.y = mean, geom = "line") 
 
+#linear_compression
+#linear_compression2
 ############### TIME
 #Unicorn = read.table("/Users/charles/Documents/time_compress.tab",header=TRUE,sep = "\t")
 
@@ -57,5 +63,24 @@ mdat2$soft = gsub("\\w*_", "", mdat2$variable)
 #########################
 
 g <- ggplot(mdat2, aes(x=Size_fastQ,y=(value/60),colour=soft))
-g + geom_point() + facet_wrap(~type, scales = "free") + geom_line() +
-  scale_x_continuous(breaks = c((1024^2)*100,(1024^2)*500,(1024^3),(1024^3)*5,(1024^3)*10), labels = c("100 Mo","500 Mo","1 Go","5 Go","10 Go"))
+#time <- g + geom_point() + facet_wrap(~type, scales = "free") + geom_line() +
+#  scale_x_continuous(breaks = c((1024^2)*100,(1024^2)*500,(1024^3),(1024^3)*5,(1024^3)*10), labels = c("100 Mo","500 Mo","1 Go","5 Go","10 Go"))
+#time
+time2 = g + facet_wrap(~type, scales = "free") + 
+  scale_x_continuous(breaks = c((1024^2)*100,(1024^2)*500,(1024^3),(1024^3)*5,(1024^3)*10), labels = c("100 Mo","500 Mo","1 Go","5 Go","10 Go")) + 
+  stat_summary(fun.y = mean, geom = "line") + 
+  stat_summary(fun.y = mean, fun.ymin = function(x) mean(x) - sd(x), fun.ymax = function(x) mean(x) + sd(x), geom = "pointrange")
+#time2
+###########################
+# Save Graph
+png(filename="/Users/charles/programmation/perl/bench_leon/example/boxplot_compression.png")
+plot(boxplot)
+dev.off()
+
+png(filename="/Users/charles/programmation/perl/bench_leon/example/point_compression.png")
+plot(linear_compression2)
+dev.off()
+
+png(filename="/Users/charles/programmation/perl/bench_leon/example/point_time.png")
+plot(time2)
+dev.off()
