@@ -17,7 +17,7 @@ In ten years the cost and time to sequence a whole human genome decreases consid
 Now, the common way to compress those data is the GZIP format. GZIP is based on the Deflate algorithm, actually it is the combination of the Huffman coding and the LZ77 algorithm ([more explanation here](http://www.zlib.net/feldspar.html)).
 This algorithm have been developed in order to compress text data, which means data with a large set of characters.
 
-## What is LEON 
+## What is LEON ?
 
 LEON is a new software to compress data issue from NGS (Fasta and FastQ).
 LEON shares similarities with approaches using a reference genome to compress files.
@@ -33,8 +33,20 @@ With this little magic script, we produce some awesome graphs to compare the eff
 To compare these two softwares, we are interested in the global rate of compression, the rate of compression depending the size of the initial FastQ and the time of compression/decompression.
 We use FastQ from Human data with size between 100 Mo and 26 Go.
 
-We can see that the ratio of the compression by LEON in lossy mode (red) is between 90 and 95%, unregards the size of the FastQ.
+We can see that the ratio compression of LEON is better than GZIP, regardless the size of the FastQ.
+In addition the _"lossy"_ mode of LEON have a ratio between 90 and 95% in each cases, or nearly 15% at least of the others tools.
+There is not remarquable differences between the level 6 and 9 of GZIP, but these two have a wider variation.
 
+![Boxplot comparant les taux de compression de gzip et LEON avec différentes options](https://github.com/Char-Al/bench_leon/blob/master/example/boxplot_compression.png "Boxplot comparant les taux de compression de gzip et LEON avec différentes options")
+
+Now, we focus on the compression rate depending of the size of the original FastQ.
+We can notice a peak for files at 18 Go.
+The FastQ files corresponding at this peak have larger reads (125 pb vs 100 for the others).
+However this peak cannot change the analysis because all software show the same effect.
+Indeed, the thing you notice most particularly when looking at this results is that LEON is more efficient than GZIP.
+In particularly, the _"lossy"_ mode is very stable for each cases.
+
+![Evolution du taux de compression en fonction de la taille des fastQ d'origine](https://github.com/Char-Al/bench_leon/blob/master/example/point_compression.png "Evolution du taux de compression en fonction de la taille des fastQ d'origine")
 
 
 ## Citations
@@ -45,7 +57,6 @@ We can see that the ratio of the compression by LEON in lossy mode (red) is betw
 * Benoit, G. et al. **Reference-free compression of high throughput sequencing data with a probabilistic de Bruijn graph.** BMC bioinformatics 16, 288. issn: 1471-2105 (2015).
 * Van Dijk, E. L., Auger, H., Jaszczyszyn, Y. & Thermes, C. **Ten years of next-generation sequencing technology.** Trends in genetics: TIG 30, 418–426. issn: 0168-9525 (Sept. 2014).
 
-![Boxplot comparant les taux de compression de gzip et LEON avec différentes options](https://github.com/Char-Al/bench_leon/blob/master/example/boxplot_compression.png "Boxplot comparant les taux de compression de gzip et LEON avec différentes options")
 
 ![Evolution du taux de compression en fonction de la taille des fastQ d'origine](https://github.com/Char-Al/bench_leon/blob/master/example/point_compression.png "Evolution du taux de compression en fonction de la taille des fastQ d'origine")
 
