@@ -20,7 +20,7 @@ Actually the common way to compress those data is the GZIP format.
 GZIP is based on the Deflate algrithm, in fact it is the combination of the LZ77 algorithm and Huffmann coding ([more explanation here](http://www.zlib.net/feldspar.html)).
 This algorithm was developed to compress text data, wich means data with a large set of characters.
 
-## What is LEON ?
+## What is LEON 
 
 LEON is a new software to compress data issue from NGS (Fasta and FastQ).
 This approach shared some similarities with those used a reference genome.
