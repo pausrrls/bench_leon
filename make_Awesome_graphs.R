@@ -8,6 +8,7 @@ library(reshape2)
 args = commandArgs(trailingOnly=TRUE)
 
 inputFile = args[0]
+inputFile = "/Users/charles/programmation/perl/bench_leon/example/report.tab"
 
 
 Unicorn = read.table(inputFile,header=TRUE)
