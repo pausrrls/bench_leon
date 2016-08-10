@@ -31,7 +31,14 @@ Based on bloom filters the _de Bruijn Graph_ this is not exact but efficient to 
 
 ![LEON method overview (from : Reference-free compression of high throughput sequencing data with a probabilistic de Bruijn graph)](https://github.com/Char-Al/bench_leon/blob/master/images/LEON_overview.png "LEON method overview (from : Reference-free compression of high throughput sequencing data with a probabilistic de Bruijn graph)")
 
-## Comparison between compression of fastq by gzip and Leon
+## Comparison between compression of fastq by Gzip and LEON
+
+With this little magic script we produce some awesome graphs to compare the efficiency of GZIP and LEON.
+To compare this two soft we are interested to the global rate of compression, the rate of compression depending the size of the initial FastQ and the time of compression/decompression.
+We use FastQ from Human data with size between 100 Mo and 26 Go.
+
+We can see that the ratio compression of LEON mode lossy (red) is between 90 and 95%, unregards the size of the FastQ.
+
 
 
 ## Citations
