@@ -48,6 +48,14 @@ In particularly, the _"lossy"_ mode is very stable for each cases.
 
 ![Evolution du taux de compression en fonction de la taille des fastQ d'origine](https://github.com/Char-Al/bench_leon/blob/master/example/point_compression.png "Evolution du taux de compression en fonction de la taille des fastQ d'origine")
 
+Concerning the time of compression and decompression we can notice that it depends of the size of initial file.
+LEON, _"lossy"_ and _"lossless"_ mode, have a similar time than GZIP level 6 for the compression.
+GZIP level 9 time of compression increase very fast and it is more than twice as long in some cases.
+LEON is less efficient for decompression time, and all GZIP level have roughly the same time of decompression.
+
+![Evolution du temps de compression en fonction de la taille des fastQ d'origine](https://github.com/Char-Al/bench_leon/blob/master/example/point_time.png "Evolution du temps de compression en fonction de la taille des fastQ d'origine")
+
+## Is LEON _"lossy"_ mode have an impact on SNPs/Indels calling ?
 
 ## Citations
 * International Human Genome Sequencing Consortium. __Finishing the euchromatic sequence of the human genome.__ Nature 431, 931–945. issn: 1476-4687 (Oct. 2004).
@@ -56,8 +64,3 @@ In particularly, the _"lossy"_ mode is very stable for each cases.
 * Zhang, Y. et al. **Light-weight reference-based compression of FASTQ data.** BMC bioinformatics 16, 188. issn: 1471-2105 (2015).
 * Benoit, G. et al. **Reference-free compression of high throughput sequencing data with a probabilistic de Bruijn graph.** BMC bioinformatics 16, 288. issn: 1471-2105 (2015).
 * Van Dijk, E. L., Auger, H., Jaszczyszyn, Y. & Thermes, C. **Ten years of next-generation sequencing technology.** Trends in genetics: TIG 30, 418–426. issn: 0168-9525 (Sept. 2014).
-
-
-![Evolution du taux de compression en fonction de la taille des fastQ d'origine](https://github.com/Char-Al/bench_leon/blob/master/example/point_compression.png "Evolution du taux de compression en fonction de la taille des fastQ d'origine")
-
-![Evolution du temps de compression en fonction de la taille des fastQ d'origine](https://github.com/Char-Al/bench_leon/blob/master/example/point_time.png "Evolution du temps de compression en fonction de la taille des fastQ d'origine")
